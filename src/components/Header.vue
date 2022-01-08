@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sticky-top">
     <b-modal ref="edit" hide-footer :title="modalTitle">
       <form v-if="addFormMode === 'addProject'">
         <b-form-group label="Name" label-for="projectName">
@@ -48,7 +48,12 @@
             class="mt-3"
           ></b-form-select>
         </b-form-group>
-        <b-button @click="addProjectSubmit" variant="info">Submit</b-button>
+        <b-button
+          @click="addProjectSubmit"
+          :disabled="projectLoader"
+          variant="info"
+          >Add Project</b-button
+        >
       </form>
       <form
         v-if="addFormMode === 'addEmployee'"
@@ -65,10 +70,15 @@
             required
           ></b-form-input>
         </b-form-group>
-        <b-button @click="addEmployeeSubmit" variant="info">Submit</b-button>
+        <b-button
+          @click="addEmployeeSubmit"
+          :disabled="employeeLoader"
+          variant="info"
+          >Add Employee</b-button
+        >
       </form>
     </b-modal>
-    <b-navbar toggleable="lg" type="dark" variant="info" sticky>
+    <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand href="#">Project Dashboard</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -93,10 +103,16 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   name: "Header",
   props: ["employeeDetails"],
+  computed: {
+    ...mapState({
+      projectLoader: (state) => state.projectLoader,
+      employeeLoader: (state) => state.employeeLoader,
+    }),
+  },
   data: function () {
     return {
       addFormMode: "",
@@ -191,4 +207,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+</style>
