@@ -2,15 +2,19 @@
   <div>
     <Header :employeeDetails="employeeDetails" />
     <b-container>
-      <h3>Project List</h3>
-      <ProjectTable
-        :projectDetails="projectDetails"
-        :employeeDetails="employeeDetails"
-        :submitEditProject="submitEditProject"
-        :removeSingleProject="removeSingleProject"
-      />
-      <h3>Employee List</h3>
-      <EmployeeTable :employeeDetails="employeeDetails" />
+      <h3 class="font-18 pb-3 pt-4">Project List</h3>
+      <b-overlay :show="projectLoader" rounded="sm">
+        <ProjectTable
+          :projectDetails="projectDetails"
+          :employeeDetails="employeeDetails"
+          :submitEditProject="submitEditProject"
+          :removeSingleProject="removeSingleProject"
+        />
+      </b-overlay>
+      <h3 class="font-18 pt-5 pb-3">Employee List</h3>
+      <b-overlay :show="employeeLoader" rounded="sm">
+        <EmployeeTable :employeeDetails="employeeDetails" />
+      </b-overlay>
     </b-container>
   </div>
 </template>
@@ -26,6 +30,8 @@ export default {
   computed: {
     ...mapState({
       projectDetails: (state) => state.projectDetails,
+      projectLoader: (state) => state.projectLoader,
+      employeeLoader: (state) => state.employeeLoader,
       employeeDetails: (state) => state.employeeDetails,
     }),
   },

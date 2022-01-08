@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal ref="editModal" hide-footer title="Edit Project">
+    <b-modal ref="editModal" hide-footer title="Edit Project" show-empty>
       <form ref="form">
         <b-form-group
           label="Name"
@@ -49,7 +49,11 @@
       v-if="projectDetails !== null"
       :items="Object.values(projectDetails)"
       responsive
+      show-empty
     >
+      <template #empty>
+        <h4 class="font-14">No project found.</h4>
+      </template>
       <template #cell(name)="data">
         <b class="text-info">{{ data.value }}</b>
       </template>
